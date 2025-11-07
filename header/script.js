@@ -1,12 +1,12 @@
 // =========================================================
-//  SURFACES ATELIER â€” HEADER / NAVIGATION JS
+//  SURFACES ATELIER — HEADER / NAVIGATION JS
 //  ---------------------------------------------------------
-//  Desktop (â‰¥1200px)
-//    â€¢ Topâ€‘level "PorcelainÂ Finishes" opens dropdown on HOVER
-//    â€¢ Header stays navy while dropdown visible
-//    â€¢ Logo + links turn white, active toggle turns gold
+//  Desktop (≥1200px)
+//    • Top‑level "Porcelain Finishes" opens dropdown on HOVER
+//    • Header stays navy while dropdown visible
+//    • Logo + links turn white, active toggle turns gold
 //  Mobile (<1200px)
-//    â€¢ Behaviour unchanged (tap to reveal stacked subâ€‘menu)
+//    • Behaviour unchanged (tap to reveal stacked sub‑menu)
 // =========================================================
 
 const header            = document.getElementById("main-header");
@@ -161,7 +161,7 @@ document.addEventListener("keydown", e => {
 });
 
 // ---------------------------------------------------------
-//  MOBILE subâ€‘menu swap (unchanged)
+//  MOBILE sub‑menu swap (unchanged)
 // ---------------------------------------------------------
 const mainNav      = document.querySelector(".main-nav");
 const porcelainNav = document.getElementById("porcelainNav");
@@ -172,7 +172,7 @@ function closeMobileSubmenu() {
   porcelainDropdown.classList.remove("active");
 }
 
-// On mobile, tapping the toggle slides to subâ€‘nav
+// On mobile, tapping the toggle slides to sub‑nav
 navWrapper.querySelectorAll(".menu-toggle").forEach(btn => {
   btn.addEventListener("click", () => {
     if (isMobile()) btn.parentElement.classList.toggle("open");
@@ -190,7 +190,7 @@ porcelainToggle.addEventListener("click", () => {
 document.querySelector(".submenu-back").addEventListener("click", closeMobileSubmenu);
 
 // ---------------------------------------------------------
-//  DESKTOP â€” Hoverâ€‘triggered dropdown
+//  DESKTOP — Hover‑triggered dropdown
 // ---------------------------------------------------------
 
 
@@ -226,11 +226,11 @@ document.addEventListener('click', e => {
 
 
 // ---------------------------------------------------------
-//  Fallback click for mobile (safeâ€‘guard)
+//  Fallback click for mobile (safe‑guard)
 // ---------------------------------------------------------
 porcelainToggle.addEventListener("click", e => {
   if (!isMobile()) {
-    // Prevent pageâ€‘jump when clicked on desktop
+    // Prevent page‑jump when clicked on desktop
     e.preventDefault();
   }
 });
