@@ -55,11 +55,11 @@
 }
 
 .hero-line--primary {
-  font-size: clamp(52px, 12vw, 128px);
+  font-size: clamp(50px, 12vw, 128px);
 }
 
 .hero-line--secondary {
-  font-size: clamp(38px, 9vw, 92px);
+  font-size: clamp(100px, 9vw, 92px);
 }
 
 .hero-tagline {
