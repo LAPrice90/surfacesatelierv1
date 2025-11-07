@@ -1,12 +1,12 @@
 // =========================================================
-//  LAMINAM COMMERICAL — HEADER / NAVIGATION JS
+//  SURFACES ATELIER â€” HEADER / NAVIGATION JS
 //  ---------------------------------------------------------
-//  Desktop (≥1200px)
-//    • Top‑level "Porcelain Finishes" opens dropdown on HOVER
-//    • Header stays navy while dropdown visible
-//    • Logo + links turn white, active toggle turns gold
+//  Desktop (â‰¥1200px)
+//    â€¢ Topâ€‘level "PorcelainÂ Finishes" opens dropdown on HOVER
+//    â€¢ Header stays navy while dropdown visible
+//    â€¢ Logo + links turn white, active toggle turns gold
 //  Mobile (<1200px)
-//    • Behaviour unchanged (tap to reveal stacked sub‑menu)
+//    â€¢ Behaviour unchanged (tap to reveal stacked subâ€‘menu)
 // =========================================================
 
 const header            = document.getElementById("main-header");
@@ -22,25 +22,49 @@ const basePath = (() => {
   return new URL("../", src).href; // e.g. https://user.github.io/repo/
 })();
 
-const NAVY_LOGO_SRC  = basePath + "images/Laminam_Logo_Clean_Navy.png";
-const WHITE_LOGO_SRC = basePath + "images/Laminam_Logo_Clean_White.png";
+const NAVY_LOGO_SRC  = basePath + "images/atelier-logo-navy.png";
+const WHITE_LOGO_SRC = basePath + "images/atelier-logo-white.png";
 const FORCE_NAVY_LOGO = true; // keep compliance default; toggle off if white logo is approved
 
 // ---------------------------------------------------------
 //  Favicon color swap for dark mode
 // ---------------------------------------------------------
 const faviconLink = document.getElementById("favicon");
-const faviconPath = faviconLink?.dataset.icon || "images/favicon.svg";
+const faviconPath = faviconLink?.dataset.icon || "images/atelier-logo-navy%20-%20icon.png";
 
 let whiteFaviconData = null;
+
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
 
 async function generateWhiteIcon() {
   if (!faviconLink || whiteFaviconData) return;
   try {
-    const res = await fetch(basePath + faviconPath);
-    let svgText = await res.text();
-    svgText = svgText.replace(/fill="#000000"/gi, 'fill="#ffffff"');
-    whiteFaviconData = `data:image/svg+xml;base64,${btoa(svgText)}`;
+    const img = await loadImage(basePath + faviconPath);
+    const canvas = document.createElement("canvas");
+    canvas.width = img.naturalWidth || img.width;
+    canvas.height = img.naturalHeight || img.height;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      const alpha = data[i + 3];
+      data[i] = 255;
+      data[i + 1] = 255;
+      data[i + 2] = 255;
+      data[i + 3] = alpha;
+    }
+    ctx.putImageData(imageData, 0, 0);
+    whiteFaviconData = canvas.toDataURL("image/png");
   } catch (_) {
     whiteFaviconData = null;
   }
@@ -137,7 +161,7 @@ document.addEventListener("keydown", e => {
 });
 
 // ---------------------------------------------------------
-//  MOBILE sub‑menu swap (unchanged)
+//  MOBILE subâ€‘menu swap (unchanged)
 // ---------------------------------------------------------
 const mainNav      = document.querySelector(".main-nav");
 const porcelainNav = document.getElementById("porcelainNav");
@@ -148,7 +172,7 @@ function closeMobileSubmenu() {
   porcelainDropdown.classList.remove("active");
 }
 
-// On mobile, tapping the toggle slides to sub‑nav
+// On mobile, tapping the toggle slides to subâ€‘nav
 navWrapper.querySelectorAll(".menu-toggle").forEach(btn => {
   btn.addEventListener("click", () => {
     if (isMobile()) btn.parentElement.classList.toggle("open");
@@ -166,7 +190,7 @@ porcelainToggle.addEventListener("click", () => {
 document.querySelector(".submenu-back").addEventListener("click", closeMobileSubmenu);
 
 // ---------------------------------------------------------
-//  DESKTOP — Hover‑triggered dropdown
+//  DESKTOP â€” Hoverâ€‘triggered dropdown
 // ---------------------------------------------------------
 
 
@@ -202,11 +226,11 @@ document.addEventListener('click', e => {
 
 
 // ---------------------------------------------------------
-//  Fallback click for mobile (safe‑guard)
+//  Fallback click for mobile (safeâ€‘guard)
 // ---------------------------------------------------------
 porcelainToggle.addEventListener("click", e => {
   if (!isMobile()) {
-    // Prevent page‑jump when clicked on desktop
+    // Prevent pageâ€‘jump when clicked on desktop
     e.preventDefault();
   }
 });

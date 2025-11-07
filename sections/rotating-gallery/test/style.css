@@ -1,4 +1,4 @@
-/* ─── rotating-gallery (inherits Installation-Process layout) ───────────── */
+/* â”€â”€â”€ rotating-gallery (inherits Installation-Process layout) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .rotating-gallery-process {
   background: #fff;
   text-align: center;
@@ -12,7 +12,7 @@
   font-size:clamp(32px,6vw,72px);
   font-weight:400;
   letter-spacing:.08em;
-  color:#003b5c;
+  color:var(--color-navy);
   margin:0 0 60px;
 }
 
@@ -31,15 +31,15 @@
   letter-spacing:1px;
   padding:6px 32px;
   border-radius:40px;
-  border:2px solid #003b5c;
+  border:2px solid var(--color-navy);
   background:#fff;
-  color:#003b5c;
+  color:var(--color-navy);
   cursor:pointer;
   transition:.3s;
 }
 .process-tabs .tab:hover,
 .process-tabs .tab.active{
-  background:#003b5c;
+  background:var(--color-navy);
   color:#fff;
 }
 
@@ -75,7 +75,7 @@
 .rotating-gallery-process .swiper-button-prev::after,
 .rotating-gallery-process .swiper-button-next::after{
   font-size:18px;
-  color:#003b5c;
+  color:var(--color-navy);
 }
 @media (max-width:1024px){
   .rotating-gallery-process .swiper-button-prev,

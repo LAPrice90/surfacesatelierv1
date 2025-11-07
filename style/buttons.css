@@ -19,7 +19,7 @@
 
 /* Solid dark blue button (primary) */
 .btn--primary {
-  background: #003b5c;
+  background: var(--color-navy);
   color: #fff;
 }
 
@@ -30,12 +30,12 @@
 /* White background with blue border */
 .btn--outline {
   background: #fff;
-  color: #003b5c;
-  border: 2px solid #003b5c;
+  color: var(--color-navy);
+  border: 2px solid var(--color-navy);
 }
 
 .btn--outline:hover {
-  background: #003b5c;
+  background: var(--color-navy);
   color: #fff;
 }
 
@@ -45,7 +45,7 @@
   align-items: center;
   padding: 5px 80px 5px 12px;
   border-radius: 40px;
-  background: #003b5c;
+  background: var(--color-navy);
   color: #fff;
   font-weight: 600;
   font-size: 14px;
@@ -75,9 +75,9 @@
 .btn--tab {
   padding: 6px 32px;
   border-radius: 40px;
-  border: 2px solid #003b5c;
+  border: 2px solid var(--color-navy);
   background: #fff;
-  color: #003b5c;
+  color: var(--color-navy);
   font-size: 14px;
   font-family: 'Work Sans', sans-serif;
   letter-spacing: 1px;
@@ -86,7 +86,7 @@
 
 .btn--tab:hover,
 .btn--tab.active {
-  background: #003b5c;
+  background: var(--color-navy);
   color: #fff;
 }
 
