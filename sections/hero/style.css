@@ -50,16 +50,15 @@
   display: block;
   line-height: 1.1;
   margin: 0;
-  letter-spacing: var(--hero-letter-spacing, clamp(0.12rem, 0.9vw, 1rem));
-  transition: letter-spacing 0.3s ease;
+  letter-spacing: clamp(0.12rem, 0.85vw, 1.1rem);
 }
 
 .hero-line--primary {
-  font-size: clamp(50px, 12vw, 128px);
+  font-size: clamp(51px, 12.3vw, 125px);
 }
 
 .hero-line--secondary {
-  font-size: clamp(100px, 9vw, 92px);
+  font-size: clamp(65px, 15.1vw, 157px);
 }
 
 .hero-tagline {
