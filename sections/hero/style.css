@@ -1,4 +1,5 @@
 .hero-section {
+  position: relative;
   width: 100%;
   height: 100vh;
   background: url("../../images/arabescato-gold-laminam.png") center/cover no-repeat;
@@ -49,16 +50,16 @@
   display: block;
   line-height: 1.1;
   margin: 0;
+  letter-spacing: var(--hero-letter-spacing, clamp(0.12rem, 0.9vw, 1rem));
+  transition: letter-spacing 0.3s ease;
 }
 
 .hero-line--primary {
   font-size: clamp(52px, 12vw, 128px);
-  letter-spacing: clamp(0.18rem, 1.2vw, 1.4rem);
 }
 
 .hero-line--secondary {
   font-size: clamp(38px, 9vw, 92px);
-  letter-spacing: clamp(0.12rem, 0.9vw, 1rem);
 }
 
 .hero-tagline {
@@ -74,4 +75,3 @@
   letter-spacing: clamp(0.08rem, 0.6vw, 0.5rem);
   white-space: nowrap;
 }
-
