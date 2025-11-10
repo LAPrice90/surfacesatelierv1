@@ -124,6 +124,7 @@
 #main-header:not(.scrolled):not(.menu-open) .nav-links a:hover { color: var(--color-gold); }
 #main-header.scrolled .nav-links a:hover { color: var(--color-gold); }
 #main-header:hover #header-logo { filter: brightness(0) invert(1); }
+#main-header.scrolled #header-logo { filter: brightness(0) invert(1); }
 #main-header.menu-open #header-logo { filter: brightness(0) invert(1); }
 
 /* ---------- Dropdown basics ----------------------------- */
@@ -290,11 +291,6 @@
 
 /* ---------- Desktop (≥1200px) --------------------------- */
 @media (min-width: 1200px) {
-  #main-header.scrolled  #header-logo,
-  #main-header:hover     #header-logo {
-    filter: brightness(0) invert(1);
-  }
-
   .hamburger { display: none; }
 
   .nav-wrapper {
