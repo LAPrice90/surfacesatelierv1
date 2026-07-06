@@ -13,11 +13,34 @@
 /* tablet: two per row */
 @media (min-width: 768px) and (max-width: 1023px) {
   .contact-trio { grid-template-columns: repeat(2, 1fr); }
+
+  .contact-trio--five .person:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 100%;
+    max-width: calc((100% - 20px) / 2);
+  }
 }
 
 /* desktop: three per row */
 @media (min-width: 1024px) {
   .contact-trio { grid-template-columns: repeat(3, 1fr); }
+
+  .contact-trio--five {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .contact-trio--five .person {
+    grid-column: span 2;
+  }
+
+  .contact-trio--five .person:nth-last-child(2) {
+    grid-column: 2 / span 2;
+  }
+
+  .contact-trio--five .person:last-child {
+    grid-column: 4 / span 2;
+  }
 }
 
 /* card */
@@ -45,4 +68,3 @@
 /* text */
 .contact-trio h3 { color: var(--color-white); margin-bottom: var(--space-xs); }
 .contact-trio p  { margin: 0 0 var(--space-xs); font-size: 14px; line-height: 1.4; color: var(--color-white); }
-
