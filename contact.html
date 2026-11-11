@@ -188,6 +188,7 @@
 
   const form = document.getElementById('contact-form');
   const submitButton = form.querySelector('button[type="submit"]');
+  const formFields = form.querySelectorAll('input, textarea');
   const statusMessage = document.getElementById('form-status');
   const deliveryError = 'We could not confirm receipt. Your details are still here. Please try again or email info@surfacesatelier.com.';
   let isSubmitting = false;
@@ -205,6 +206,7 @@
     statusMessage.textContent = 'Sending your enquiry...';
 
     const data = Object.fromEntries(new FormData(form).entries());
+    formFields.forEach(field => { field.disabled = true; });
     const currentDetails = JSON.stringify(data);
     if (currentDetails !== previousDetails) {
       submissionId = crypto.randomUUID();
@@ -237,6 +239,7 @@
     } finally {
       clearTimeout(timeout);
       isSubmitting = false;
+      formFields.forEach(field => { field.disabled = false; });
       submitButton.disabled = false;
       submitButton.textContent = 'Send Message';
     }
