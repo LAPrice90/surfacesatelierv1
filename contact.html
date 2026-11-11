@@ -152,60 +152,93 @@
 
   <section class="contact-form container fade-in">
     <h1 class="media-left__heading">Get in touch</h1>
-    <form id="contact-form">
+    <form id="contact-form" method="post">
       <label for="cf-name">Name*</label>
-      <input type="text" id="cf-name" name="name" required>
+      <input type="text" id="cf-name" name="name" maxlength="200" required>
 
       <label for="cf-company">Company*</label>
-      <input type="text" id="cf-company" name="company" required>
+      <input type="text" id="cf-company" name="company" maxlength="200" required>
 
       <label for="cf-phone">Phone Number*</label>
-      <input type="tel" id="cf-phone" name="phone" required>
+      <input type="tel" id="cf-phone" name="phone" maxlength="80" required>
 
       <label for="cf-email">Email*</label>
-      <input type="email" id="cf-email" name="email" required>
+      <input type="email" id="cf-email" name="email" maxlength="254" required>
 
       <label for="cf-address">Address</label>
-      <input type="text" id="cf-address" name="address">
+      <input type="text" id="cf-address" name="address" maxlength="1000">
 
       <label for="cf-message">Message</label>
-      <textarea id="cf-message" name="message" rows="5"></textarea>
+      <textarea id="cf-message" name="message" rows="5" maxlength="10000"></textarea>
+
+      <div aria-hidden="true" style="position:absolute;left:-10000px;">
+        <label for="cf-website">Website</label>
+        <input type="text" id="cf-website" name="website" tabindex="-1" autocomplete="off">
+      </div>
 
       <button type="submit" class="btn btn--primary">Send Message</button>
+      <p id="form-status" role="status" aria-live="polite" hidden></p>
+      <noscript>Please email <a href="mailto:info@surfacesatelier.com">info@surfacesatelier.com</a> with your enquiry.</noscript>
     </form>
   </section>
 
   <script>
   const scriptURL =
-    'https://script.google.com/macros/s/AKfycbxQ7HAy2DdHX6dqUl_NFra0d3bxLbqXd3TdwHcroy-JWHWDV8vA5FblypKmFbtmOYXXOw/exec';
+    'https://script.google.com/macros/s/AKfycbynxC6HKItKVbVSw0xFMNHxT1tIIrII1AEwgtSxn7eEFWE9psbGyCRzOJaqHOHcTRSE0A/exec';
 
+  const form = document.getElementById('contact-form');
+  const submitButton = form.querySelector('button[type="submit"]');
+  const statusMessage = document.getElementById('form-status');
+  const deliveryError = 'We could not confirm receipt. Your details are still here. Please try again or email info@surfacesatelier.com.';
   let isSubmitting = false;
+  let submissionId;
+  let previousDetails;
 
-  document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     if (isSubmitting) return;
     isSubmitting = true;
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending...';
+    statusMessage.hidden = false;
+    statusMessage.textContent = 'Sending your enquiry...';
 
-    const data = Object.fromEntries(new FormData(e.target).entries());
+    const data = Object.fromEntries(new FormData(form).entries());
+    const currentDetails = JSON.stringify(data);
+    if (currentDetails !== previousDetails) {
+      submissionId = crypto.randomUUID();
+      previousDetails = currentDetails;
+    }
+    data.submissionId = submissionId;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
     try {
-      await fetch(scriptURL, {
+      const response = await fetch(scriptURL, {
         method: 'POST',
         redirect: 'follow',
         headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        signal: controller.signal
       });
-
-      const popup = document.getElementById('popup');
-      popup.classList.add('open');
-      e.target.reset();
-
-      document.getElementById('popup-close').addEventListener('click', () => {
-        popup.classList.remove('open');
-      }, { once: true });
+      if (!response.ok) throw new Error('Collector unavailable');
+      const result = await response.json();
+      if (!result.ok || !result.emailSent) {
+        statusMessage.textContent = result.error || deliveryError;
+        return;
+      }
+      statusMessage.textContent = 'Thank you. Your enquiry has been received by Surfaces Atelier.';
+      form.reset();
+      previousDetails = undefined;
+      submissionId = undefined;
+    } catch (error) {
+      statusMessage.textContent = deliveryError;
     } finally {
+      clearTimeout(timeout);
       isSubmitting = false;
+      submitButton.disabled = false;
+      submitButton.textContent = 'Send Message';
     }
   });
   </script>
